@@ -33,7 +33,6 @@ model User {
   image         String?
   passwordHash  String
   currency      String        @default("USD")
-  language      String        @default("en")
   theme         ThemePreference @default(SYSTEM)
   aiPreferences Json          @default("{\"monthlySummaries\":true,\"spendingAlerts\":true,\"investmentTips\":true}")
   accounts      Account[]

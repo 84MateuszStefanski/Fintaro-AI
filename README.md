@@ -13,11 +13,11 @@ Fintaro AI is a production-ready full-stack fintech SaaS starter for intelligent
 - **Analytics:** income vs expenses, spending by category, budget usage, allocation, month-over-month indicators and health metrics.
 - **AI assistant:** OpenAI-powered financial analysis when `OPENAI_API_KEY` is configured; realistic mock insights otherwise.
 - **Notifications:** budget, goal, monthly summary and unusual spending notifications.
-- **Settings:** profile, currency, language (English/Polish), theme preference and AI preferences.
+- **Settings:** profile, currency, theme preference and AI preferences.
 
 ## Tech stack
 
-- **Frontend:** Next.js 15 App Router, React 19, TypeScript, Tailwind CSS, shadcn-style UI primitives, Recharts, Lucide icons, built-in English/Polish dictionaries.
+- **Frontend:** Next.js 15 App Router, React 19, TypeScript, Tailwind CSS, shadcn-style UI primitives, Recharts, Lucide icons.
 - **Backend:** Next.js server actions and API routes.
 - **Database:** PostgreSQL with Prisma ORM and migrations.
 - **Authentication:** NextAuth/Auth.js credentials flow with JWT sessions.
@@ -37,10 +37,6 @@ After the build completes:
 - PostgreSQL: `localhost:5432`
 
 The app container waits for PostgreSQL, runs Prisma migrations, seeds demo data and starts Next.js automatically.
-
-## Language support
-
-Fintaro AI supports English and Polish. Users can switch the interface language from **Settings → Language**; the preference is stored per user and also guides AI responses/mock insights.
 
 ## Demo credentials
 

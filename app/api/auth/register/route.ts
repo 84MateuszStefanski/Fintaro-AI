@@ -7,6 +7,6 @@ export async function POST(req: Request) {
   if (!email || !password || password.length < 8) return NextResponse.json({ error: "Valid email and 8+ character password required." }, { status: 400 });
   const exists = await prisma.user.findUnique({ where: { email: String(email).toLowerCase() } });
   if (exists) return NextResponse.json({ error: "Email is already registered." }, { status: 409 });
-  const user = await prisma.user.create({ data: { name, email: String(email).toLowerCase(), passwordHash: await bcrypt.hash(password, 12), language: "en" } });
+  const user = await prisma.user.create({ data: { name, email: String(email).toLowerCase(), passwordHash: await bcrypt.hash(password, 12) } });
   return NextResponse.json({ id: user.id });
 }

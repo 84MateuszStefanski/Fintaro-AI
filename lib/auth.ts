@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
         if (!user) return null;
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
         if (!valid) return null;
-        return { id: user.id, email: user.email, name: user.name, image: user.image, currency: user.currency, language: user.language };
+        return { id: user.id, email: user.email, name: user.name, image: user.image, currency: user.currency };
       }
     })
   ],
@@ -25,7 +25,6 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.currency = (user as { currency?: string }).currency;
-        token.language = (user as { language?: string }).language;
       }
       return token;
     },
@@ -33,7 +32,6 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = token.id;
         session.user.currency = token.currency ?? "USD";
-        session.user.language = token.language ?? "en";
       }
       return session;
     }

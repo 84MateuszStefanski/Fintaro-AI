@@ -8,8 +8,8 @@ async function main() {
   const passwordHash = await bcrypt.hash("demo1234", 12);
   const user = await prisma.user.upsert({
     where: { email: "demo@fintaro.ai" },
-    update: { passwordHash, language: "en" },
-    create: { name: "Demo Financier", email: "demo@fintaro.ai", passwordHash, currency: "USD", language: "en" }
+    update: { passwordHash },
+    create: { name: "Demo Financier", email: "demo@fintaro.ai", passwordHash, currency: "USD" }
   });
   await prisma.notification.deleteMany({ where: { userId: user.id } });
   await prisma.aIInsight.deleteMany({ where: { userId: user.id } });
