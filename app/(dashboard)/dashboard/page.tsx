@@ -1,0 +1,14 @@
+import { Bot, Briefcase, PiggyBank, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { IncomeExpenseChart, CategoryPie } from "@/components/charts/finance-charts";
+import { Card, CardTitle } from "@/components/ui/card";
+import { getFinancialSnapshot, requireUser } from "@/lib/data";
+import { formatCurrency, pct } from "@/lib/utils";
+import { getUserDictionary } from "@/lib/i18n";
+
+export default async function DashboardPage() {
+  const user = await requireUser();
+  const data = await getFinancialSnapshot(user.id);
+  const t = await getUserDictionary(user.id);
+  const stats = [[t.totalBalance, data.totalBalance, Wallet], [t.monthlyIncome, data.income, TrendingUp], [t.monthlyExpenses, data.expenses, TrendingDown], [t.investmentValue, data.investmentValue, Briefcase]] as const;
+  return <div className="space-y-6"><header><p className="text-sm text-muted-foreground">{t.welcomeBack}, {user.name}</p><h1 className="text-4xl font-black tracking-tight">{t.financialCockpit}</h1></header><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{stats.map(([label, value, Icon]) => <Card key={label}><div className="flex items-center justify-between"><p className="text-sm text-muted-foreground">{label}</p><Icon className="size-5 text-primary" /></div><p className="mt-3 text-3xl font-black">{formatCurrency(value, user.currency)}</p></Card>)}</div><div className="grid gap-4 xl:grid-cols-3"><Card className="xl:col-span-2"><CardTitle>{t.incomeVsExpenses}</CardTitle><IncomeExpenseChart data={data.monthlySeries} /></Card><Card><CardTitle>{t.financialHealth}</CardTitle><div className="mt-5 grid place-items-center rounded-full border p-10 text-center"><p className="text-6xl font-black gradient-text">{data.healthScore}</p><p className="text-sm text-muted-foreground">{t.savingsRate} {pct(data.savingsRate)}</p></div></Card></div><div className="grid gap-4 xl:grid-cols-3"><Card><CardTitle>{t.spendingByCategory}</CardTitle><CategoryPie data={data.byCategory} /></Card><Card className="xl:col-span-2"><div className="flex items-start gap-3"><Bot className="mt-1 text-primary" /><div><CardTitle>{data.insights[0]?.title ?? t.aiInsight}</CardTitle><p className="mt-3 text-muted-foreground">{data.insights[0]?.content ?? "Connect more data or add transactions to unlock richer insights."}</p></div></div></Card></div><Card><div className="flex items-center gap-2"><PiggyBank className="text-primary"/><CardTitle>{t.recentTransactions}</CardTitle></div><div className="mt-4 divide-y">{data.transactions.slice(0, 6).map((t) => <div key={t.id} className="flex justify-between py-3"><div><p className="font-medium">{t.description}</p><p className="text-xs text-muted-foreground">{t.category}</p></div><p className={t.type === "INCOME" ? "text-emerald-500" : "text-red-500"}>{t.type === "INCOME" ? "+" : "-"}{formatCurrency(Number(t.amount), user.currency)}</p></div>)}</div></Card></div>;
+}
