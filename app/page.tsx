@@ -1,0 +1,7 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+
+export default function Home() {
+  return <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,rgba(20,184,166,.25),transparent_35%)]"><section className="mx-auto flex max-w-6xl flex-col items-center px-6 py-24 text-center"><div className="mb-6 rounded-full border bg-card px-4 py-2 text-sm text-muted-foreground">AI budgeting • investments • savings • alerts</div><h1 className="max-w-4xl text-5xl font-black tracking-tight md:text-7xl">Your premium finance command center, powered by <span className="gradient-text">Fintaro AI</span>.</h1><p className="mt-6 max-w-2xl text-lg text-muted-foreground">Plan budgets, grow savings, track investments and receive intelligent financial guidance from your private data cockpit.</p><div className="mt-8 flex gap-3"><Link href="/register"><Button>Start free</Button></Link><Link href="/login"><Button variant="secondary">Demo login</Button></Link></div><div className="mt-14 grid w-full gap-4 md:grid-cols-3">{["Financial health score", "AI monthly summary", "Portfolio allocation"].map((item) => <Card key={item} className="p-8 text-left"><p className="text-xl font-bold">{item}</p><p className="mt-2 text-sm text-muted-foreground">Production-ready flows, protected data, Dockerized PostgreSQL and polished SaaS UX.</p></Card>)}</div></section></main>;
+}
